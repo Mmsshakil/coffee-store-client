@@ -1,4 +1,7 @@
 
+import swal from 'sweetalert';
+
+
 const AddCoffee = () => {
 
 
@@ -15,9 +18,26 @@ const AddCoffee = () => {
         const details = form.details.value;
         const photo = form.photo.value;
 
-        const newCoffee = {name,quantity , supplier, taste, category, details, photo};
-        
+        const newCoffee = { name, quantity, supplier, taste, category, details, photo };
+
         console.log(newCoffee);
+
+        // send data to the database
+        fetch('http://localhost:5000/coffee', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(newCoffee)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if(data.insertedId){
+                    swal("Done", "Coffee Added Success", "success");
+                }
+            })
+        // ---------------------------------
 
     }
 
