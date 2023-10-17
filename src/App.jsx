@@ -2,10 +2,15 @@
 import { useLoaderData } from 'react-router-dom'
 import './App.css'
 import CoffeeCard from './components/CoffeeCard';
+import { useState } from 'react';
 
 function App() {
 
-  const coffees = useLoaderData();
+  const loadedCoffees = useLoaderData();
+
+  // after delete the coffee will also delete from the page
+  // don't need to reload the page
+  const [coffees, setCoffees] = useState(loadedCoffees);
 
   return (
     <>
@@ -18,6 +23,8 @@ function App() {
             coffees.map(coffee => <CoffeeCard
               key={coffee._id}
               coffee={coffee}
+              coffees={coffees}
+              setCoffees={setCoffees}
             ></CoffeeCard>)
           }
         </div>
